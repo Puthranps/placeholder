@@ -1,0 +1,29 @@
+{
+  "name": "webrtc-serverless-p2p",
+  "version": "0.0.1",
+  "description": "a simple test implementation that works on chromium linux arm to successfully instantiate webrtc peer-to-peer connections for data transmissions without relying on a signaling server back-end. The code that is used to debug and figure out the object properties that help us in responding from client to client can be found in the server.js file",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremigendron/webrtc-serverless-p2p.git"
+  },
+  "keywords": [
+    "webrtc",
+    "serverless",
+    "p2p",
+    "distributed"
+  ],
+  "author": "jeremi gendron",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/jeremigendron/webrtc-serverless-p2p/issues"
+  },
+  "homepage": "https://github.com/jeremigendron/webrtc-serverless-p2p#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "showdown": "^1.8.6"
+  }
+}
