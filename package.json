@@ -1,7 +1,7 @@
 {
 	"scripts": {
 		"test": "jest"
-	}
+	},
 	"devDependencies": {
 		"lerna": "^2.11.0"
 	},
