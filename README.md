@@ -1,4 +1,14 @@
+[thank you](https://github.com/owebio/serverless-webrtc-chat) - used as the base
+** Confirmed working on device-to-device communication within the same NAT, some complications could arise from having different routing structures at every client's endpoint (to investigate) **
+Severing internet connection and refreshing it does not kill the connectivity in some cases, pointing to statefulness being achievable.
+
+Looking to integrate [GunJS](https://gun.eco/#step1) or similar derivative at layer 1-2
+____________________________
+
+Free to reuse this
+
 # Servlerless WebRTC data communication
+
 Avoid the use of a back-end to signal WebRTC connection instances between clients, use an intermediary file format that can be transferred via available relays like Messenger, Whatsapp and optionally encrypt the relayed contents to avoid deobfuscation.
 
 this is a work in progress currently, will report as much as needed.
