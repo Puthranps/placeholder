@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<!-- big thanks to https://github.com/owebio/serverless-webrtc-chat -->
+<head>
+ <meta charset="utf-8">
+ <title>Serverless webrtc demo</title>
+ <style>
+html, body {padding:0;margin:0;height:100%}
+div.frame {display:block;width:50%;float:left;box-sizing:border-box;height:100%;border:1px solid #DBDBDB;border-left:0}
+body {box-sizing:border-box;padding:50px 0 40px;color:#303030}
+h1   {position:fixed;margin:0;line-height:50px;padding:0 15px;top:0;left:0;font-size:18px;width:100%;box-sizing:border-box}
+h2   {position:fixed;margin:0;line-height:20px;padding:10px 15px;bottom:0;left:0;font-size:12px;font-weight:normal;width:100%;box-sizing:border-box;background:#f8f8f8}
+#ok  {color:#008C20; border: 1px solid #40A958; display:inline-block;padding:0 8px;margin-right:5px;}
+#no  {color:#BEBEBE;text-decoration:line-through}
+a.header-logo-invertocat {float:right;margin-top:9px;padding-right:10px}
+ </style>
+ <style>
+body {line-height:1.8}
+h2 {font-size:20px;margin:0;padding:0 15px}
+h3 {font-size:16px;margin:0;padding:0 8px}
+textarea {display:block;width:100%;box-sizing:border-box;margin:3px;height:50px;font-size:11px;font-family:tahoma,arial,sans-serif}
+.chatScreenWp {
+  position:relative;
+  height: 140px; margin: 0 3px; padding: 18px 5px 5px;
+  border:1px solid #dfdfdf;
+  overflow-y:scroll;
+  font-size: 12px;
+}
+span.status {float:right; font-weight:normal;color:#9E9E9E}
+div.ct  {text-align:right}
+
+div.wrap  {clear: both; padding:4px 8px}
+div.info  {position:absolute;right:0;top:0;padding:5px 18px;}
+div.other {color: #0060A0;float:left;padding:5px 18px;background:#FAFAFA;border-radius:8px;}
+div.me    {color: #EB088C;float:right;padding:5px 18px;background:#F4FAFF;border-radius:8px;}
+span.who  {display: inline-block;margin-right:5px;width:30px;text-align:center;display:none;}
+ </style>
+</head>
+<body>
+<h1>
+  Serverless simple chat app by passing SDP @ WebRTC 
+  <a class="header-logo-invertocat" href="https://github.com/jeremigendron/webrtc-serverless-p2p">
+  <svg aria-hidden="true" height="32" version="1.1" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+  </a>
+</h1>
+
+<div class="frame">
+<h2> CREATE WebRTC channel <span id="statusC" class="status"> init </span></h2>
+<h3> 1.CREATE Offer's SDP </h3>
+<textarea id="creatorSdpC"></textarea>
+<h3> 4.GET Participant's SDP <button id="startC">start</button></h3>
+<textarea id="joinerSdpC" placeholder="HERE COPY AND PASTE [3.Participant'S SDP]"></textarea>
+<h3> CHAT </h3>
+<div id="chatC">
+  <div class="chatScreenWp" id="chatScreenWpC">
+    <div id="chatScreenC"></div>
+  </div>
+  <div class="ct"><input id="msgC" disabled><button id="sendC" disabled>send</button></div>
+</div>
+<script>
+//var server       = { urls: "stun:stun.l.google.com:19302" };
+var sdpConstraintsC = { optional: [{RtpDataChannels: true}]  };
+var pcC = new RTCPeerConnection(null);
+var dcC;
+
+var statusC = document.querySelector("span#statusC");
+var msgC = document.querySelector("input#msgC");
+var sendC = document.querySelector("button#sendC");
+var creatorSdpC = document.querySelector("textarea#creatorSdpC");
+var joinerSdpC = document.querySelector("textarea#joinerSdpC");
+
+pcC.oniceconnectionstatechange = function(e) {
+  var state = pcC.iceConnectionState;
+  statusC.innerHTML = state;
+  if (state == "connected") {
+    sendC.removeAttribute("disabled");
+    msgC.removeAttribute("disabled");
+  }
+};
+pcC.onicecandidate = function(e) {
+  if (e.candidate) return;
+  creatorSdpC.value = JSON.stringify(pcC.localDescription);
+}
+
+function createOfferSDP() {
+  dcC = pcC.createDataChannel("chat");
+  pcC.createOffer().then(function(e) {
+    pcC.setLocalDescription(e)
+  });
+  dcC.onopen = function(){
+    creatorSdpC.setAttribute("disabled", true);
+    joinerSdpC.setAttribute("disabled", true);
+    addMSGC("CONNECTED!", "info")
+  };
+  dcC.onmessage = function(e) {
+    if (e.data) addMSGC(e.data, "other");
+  }
+};
+
+var start = function() {
+  var answerSdp = joinerSdpC.value;
+  console.log(answerSdp)
+  var answerDesc = new RTCSessionDescription(JSON.parse(answerSdp));
+  pcC.setRemoteDescription(answerDesc);
+}
+
+var chatScreenC = document.querySelector("#chatScreenC")
+var chatScrenWpC = document.querySelector("#chatScreenWpC")
+var addMSGC = function(msg, who) {
+  var ini = document.createElement("div"); ini.classList += "wrap";
+  var wrap = chatScreenC.appendChild(ini);
+
+  var seq = document.createElement("div"); seq.classList += who;
+  var div = wrap.appendChild(seq);
+
+  var one = document.createElement("div"); one.classList += "who"; one.innerHTML = who;
+  var two = document.createElement("div"); two.classList += "msg"; two.innerHTML = msg;
+
+  div.appendChild(one); div.appendChild(two);
+  chatScreenWpC.scrollTop = chatScreenC.height;
+
+}
+
+createOfferSDP();
+
+var sendMSGC = function() {
+  var value = msgC.value
+  if (value) {
+    dcC.send(value);
+    addMSGC(value, "me");
+    msgC.value = ''
+  }
+}
+
+document.querySelector("button#startC").onclick = start;
+sendC.onclick = sendMSGC;
+msgC.onkeypress = function(e) {
+ if(e.which == 13) sendMSGC();
+}
+</script></div>
+
+<div class="frame">
+<h2>  JOIN WebRTC channel  <span id ="statusJ" class="status"> init </span> </h2>
+<h3> 2.GET Offer's SDP</h3>
+<textarea id="creatorSdpJ" placeholder="HERE COPY & PASTE [1.CREATE Offer's SDP]"></textarea>
+<h3> 3.CREATE Participant'S SDP <button id="createJ">CREATE</button> </h3>
+<textarea id="joinerSdpJ"></textarea>
+<h3> CHAT </h3>
+<div id="chatJ">
+  <div class="chatScreenWp" id="chatScreenWpJ">
+    <div id="chatScreenJ"></div>
+  </div>
+  <div class="ct"><input id="msgJ" disabled><button id="sendJ" disabled>send</button></div>
+</div>
+<script>
+//var server       = { urls: "stun:stun.l.google.com:19302" };
+var sdpConstraintsJ = { optional: [{RtpDataChannels: true}]  };
+var pcJ = new RTCPeerConnection(null);
+var dcJ;
+
+var statusJ = document.querySelector("span#statusJ");
+var msgJ = document.querySelector("input#msgJ");
+var sendJ = document.querySelector("button#sendJ");
+var joinerSdpJ = document.querySelector("textarea#joinerSdpJ");
+var creatorSdpJ = document.querySelector("textarea#creatorSdpJ");
+
+pcJ.ondatachannel  = function(e) {dcJ = e.channel; dcInit(dcJ)};
+pcJ.onicecandidate = function(e) {
+  if (e.candidate) return;
+  joinerSdpJ.value = JSON.stringify(pcJ.localDescription);
+};
+pcJ.oniceconnectionstatechange = function(e) {
+  var state = pcJ.iceConnectionState;
+  statusJ.innerHTML = state;
+  if (state == "connected") {
+    msgJ.removeAttribute("disabled");
+    sendJ.removeAttribute("disabled");
+  }
+};
+
+function dcInit(dcJ) {
+  dcJ.onopen    = function()  {
+    joinerSdpJ.setAttribute("disabled", true);
+    creatorSdpJ.setAttribute("disabled", true);
+    addMSGJ("CONNECTED!", "info")
+  };
+  dcJ.onmessage = function(e) {
+    if (e.data) addMSGJ(e.data, "other");
+  }
+}
+
+function createAnswerSDP() {
+  var offerDesc = new RTCSessionDescription(JSON.parse(creatorSdpJ.value));
+  pcJ.setRemoteDescription(offerDesc)
+  pcJ.createAnswer(function (answerDesc) {
+    pcJ.setLocalDescription(answerDesc)
+  }, function () {console.warn("Couldn't create offer")},
+  sdpConstraintsJ);
+};
+var sendMSGJ = function() {
+  var value = msgJ.value;
+  if (value) {
+    dcJ.send(value);
+    addMSGJ(value, "me");
+    msgJ.value = '';
+  }
+}
+
+var chatScreenJ = document.querySelector("div#chatScreenJ")
+var chatScrenWpJ = document.querySelector("div#chatScreenWpJ")
+var addMSGJ = function(msg, who) {
+  var ini = document.createElement("div"); ini.classList += "wrap";
+  var wrap = chatScreenJ.appendChild(ini);
+  
+  var seq = document.createElement("div"); seq.classList += who;
+  var div = wrap.appendChild(seq);
+
+  var one = document.createElement("div"); one.classList += "who"; one.innerHTML = who;
+  var two = document.createElement("div"); two.classList += "msg"; two.innerHTML = msg;
+
+  div.appendChild(one); div.appendChild(two);
+  chatScreenWpJ.scrollTop = chatScreenJ.height;
+}
+
+document.querySelector("button#createJ").onclick = createAnswerSDP;
+msgJ.onkeypress = function(e) {
+  if(e.which == 13) sendMSGJ();
+}
+sendJ.onclick = sendMSGJ;
+</script></div>
+
+<h2>
+  <span id="ok">OPERA, FIREFOX, CHROME</span> <span id="no">SAFARI, IE, IE-EDGE</span>
+</h2>
+</body>
+</html>

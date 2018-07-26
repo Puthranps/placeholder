@@ -4,17 +4,15 @@ Avoid the use of a back-end to signal WebRTC connection instances between client
 this is a work in progress currently, will report as much as needed.
 
 ## Use
-First, you are encouraged to spin up the server with ```node server.js```
-This will give you access to an html version of this README in the browser by accessing localhost:8080
+Load the standalone.html file into a web browser, share the formatted SessionDescriptionProtocol through an alternative media and have the other party respond to it by loading (pasting) it to generate a response and open a session, which you can then in turn use to open the session on your side through loading the opposing SDP.
 
-Most of the logic is handled by the caller, which can be obtained by pinging localhost:8080/caller
+### Case
+This implementation is the skeleton for the logic used in the app that will be served to people and allow them to build networks from integrating at an entry point. For example, a forum website can use this with some sugar coating to provide a lasting peer-to-peer structure for its community members et al..
+A native app built with this basic logic can serve as a model to provide simple persistance functions to maintain higher availability and connection strength (not having to copy paste every time through functional improvements of peer-to-peer networking logic in the web browser).
 
-### Flow overview
-The caller has the logic required to create a WebRTC connection object and embed its peer settings into a virtual html file.
-This file contains the answer logic and is relayed through the server, not using the WebRTC API to maintain use-case demonstration.
-The answer mechanic is essentially compiled by the client by feeding its own peer details into an object and building an html file with which a connection to the caller can be instantiated
+The intended use is simply to design machine-illiterate cryptography through the use of personal questions to completely obfuscate later parts of the connection relationship.
 
-The intended use is simply to design machine-illiterate cryptography through the use of personal questions to completely obfuscate later parts of the connection relationship
+This module could be converted to a simple decrypter that loads in the html decrypted from an image file sent to another person, then enabling the p2p connection and saving details locally (this avoids having a certain degree of tracking, for example I am sending you an encrypted file with plugins developed that only you could have acccess to unless you copy-pasted everything; but then again there exists browser mechanics that could prevent that just like a native application could provide neat functionality).
 
 ## Example
 Not necessarily available here, but definitely a plan to test this type of flow as it will become increasingly sought after by the average user.
