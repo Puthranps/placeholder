@@ -1,18 +1,34 @@
 {
 	"scripts": {
-		"test": "jest"
+		"build:docs": "lerna run build:docs",
+		"clean": "lerna clean",
+		"commit": "git-cz",
+		"lint": "lerna run lint",
+		"bootstrap": "lerna bootstrap",
+		"depcheck": "lerna run depcheck",
+		"prepare": "lerna run prepare",
+		"test": "PH_ENV=test jest --forceExit",
+		"test:coverage": "PH_ENV=test jest --coverage --forceExit"
 	},
 	"devDependencies": {
+		"depcheck": "^0.6.9",
+		"eslint": "^5.2.0",
+		"husky": "^0.14.3",
 		"jest": "^23.4.1",
-		"lerna": "^2.11.0"
+		"jest-extended": "^0.7.2",
+		"jsdoc": "^3.5.5",
+		"lerna": "^2.11.0",
+		"lint-staged": "^7.2.0"
 	},
-	"dependencies": {},
-	"name": "Peer7",
-	"version": "0.1.0",
-	"description": "an ecosystem for peer unity",
-	"main": "packages/*",
-	"repository": "https://github.com/Peer7/placeholder",
-	"author": "see all contributors",
+	"workspaces": [
+		"packages/*"
+	],
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
 	"license": "FW",
-	"private": false
+	"private": true,
+	"dependencies": {}
 }

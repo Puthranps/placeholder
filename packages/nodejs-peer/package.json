@@ -1,10 +1,24 @@
 {
   "name": "nodejs-peer",
+  "scripts": {
+    "build:docs": "../../node_modules/.bin/jsdoc -c jsdoc.json",
+    "test": "PH_ENV=test jest --forceExit",
+    "test:coverage": "PH_ENV=test jest --coverage --forceExit",
+    "test:debug": "PH_ENV=test node --inspect-brk ../../node_modules/.bin/jest --runInBand --watch",
+    "test:watch": "PH_ENV=test jest --runInBand --watch",
+    "test:watch:all": "PH_ENV=test jest --runInBand --watchAll",
+    "lint": "eslint ./ --fix",
+    "depcheck": "depcheck ./"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
   "version": "0.1.0",
   "description": "signaling and network state persistance peer",
   "main": "index.js",
   "repository": "https://github.com/Peer7/placeholder/packages/nodejs-peer",
   "author": "see all contributors",
   "license": "FW",
-  "private": false
+  "private": true
 }
