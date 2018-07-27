@@ -5,6 +5,6 @@
     "packages/react-native-app"
   ],
   "npmClient": "yarn",
-  "useWorkspaces": true,
+  "useWorkspaces": false,
   "version": "independent"
 }
