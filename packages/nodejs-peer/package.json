@@ -1,0 +1,10 @@
+{
+  "name": "nodejs-peer",
+  "version": "0.1.0",
+  "description": "signaling and network state persistance peer",
+  "main": "index.js",
+  "repository": "https://github.com/Peer7/placeholder/packages/nodejs-peer",
+  "author": "see all contributors",
+  "license": "FW",
+  "private": false
+}

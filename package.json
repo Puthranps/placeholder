@@ -3,17 +3,16 @@
 		"test": "jest"
 	},
 	"devDependencies": {
+		"jest": "^23.4.1",
 		"lerna": "^2.11.0"
 	},
-	"dependencies": {
-		"jest": "^23.4.1"
-	},
+	"dependencies": {},
 	"name": "Peer7",
 	"version": "0.1.0",
 	"description": "an ecosystem for peer unity",
 	"main": "packages/*",
 	"repository": "https://github.com/Peer7/placeholder",
-	"author": "see contributors",
+	"author": "see all contributors",
 	"license": "FW",
 	"private": false
 }
