@@ -4,5 +4,7 @@
     "packages/nodejs-peer",
     "packages/react-native-app"
   ],
-  "version": "0.1.0"
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent"
 }
