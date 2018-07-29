@@ -1,0 +1,85 @@
+@import "../../base/colors.less";
+@import "../../base/spacing.less";
+
+.toast-wrapper {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  z-index: 20000;
+  transition: opacity .1s ease;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  min-width: 350px;
+  max-width: 450px;
+  transform: translateX(-50%);
+  text-align: center;
+  background: #ddd;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: 0 0 70px 50px #fff;
+
+  &.primary,
+  &.success,
+  &.error {
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 600;
+  }
+
+  &.error {
+    padding-left: 30px;
+  }
+
+  &.success {
+    padding-left: 40px;
+  }
+
+  &.success,
+  &.error {
+
+    &:before {
+      position: absolute;
+      left: 15px;
+      top: 8px;
+      display: block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Cantarell, "Oxygen Sans", "Helvetica Neue", sans-serif;
+      font-size: 16px;
+    }
+  }
+
+  &.primary {
+    background: @blue;
+  }
+
+  &.success {
+    background: darken(@green, 15%);
+
+    &:before {
+      content: '✓';
+    }
+  }
+
+  &.error {
+    background: shade(@red, 22%);
+
+    &:before {
+      content: '!';
+    }
+  }
+
+  .toast-btn {
+    position: absolute;
+    right: 15px;
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

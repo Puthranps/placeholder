@@ -1,0 +1,344 @@
+.system-font,
+body,
+#messageDiv {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Cantarell, "Oxygen Sans", "Helvetica Neue", sans-serif;
+}
+.code-font,
+code {
+  font-family: Consolas, 'Lucida Console', Monaco, monospace;
+}
+code {
+  font-style: normal !important;
+}
+.flex,
+.btn-bar {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.btn {
+  display: inline-block;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 2px;
+  color: #333;
+  font-size: 12.75px;
+  line-height: 26px;
+  letter-spacing: .25px;
+  font-weight: 400;
+  cursor: pointer !important;
+}
+.btn.small {
+  height: 20px;
+  line-height: 18px;
+}
+.btn.small * {
+  vertical-align: top;
+  line-height: 18px;
+}
+.btn.plain {
+  background: none;
+  border: none;
+  color: #707070;
+}
+.btn.plain:not(.toggleable) {
+  padding: 0 3px;
+}
+.btn.plain:hover {
+  color: #333;
+  background: none;
+}
+.btn.plain.accent:hover {
+  color: #2864dc;
+}
+.btn.plain:focus {
+  box-shadow: none;
+}
+.btn i {
+  vertical-align: middle;
+}
+.btn i.fa-plus {
+  font-size: 10.5px;
+  margin-top: -px;
+}
+.btn i:last-child {
+  margin-left: 2px;
+  margin-right: 0;
+}
+.btn i:first-child {
+  margin-left: 0;
+  margin-right: 2px;
+}
+.btn i:first-child:last-child {
+  margin-left: 0;
+  margin-right: 0;
+}
+.btn * {
+  cursor: pointer;
+  display: inline-block;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(41, 95, 203, 0.5);
+}
+.btn.full-width {
+  width: 100%;
+}
+.btn.center {
+  text-align: center;
+}
+.btn.thick {
+  font-size: 14px;
+  font-weight: normal;
+  height: 35px;
+  padding: 0 12px;
+}
+.btn.pressed {
+  box-shadow: inset 0px 0 5px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to top, #ddd, #ccc);
+}
+.btn.pressed:hover {
+  box-shadow: inset 0px 0 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to top, #ddd, #ccc);
+  cursor: default;
+}
+.btn:hover {
+  text-decoration: none;
+  background: #eee;
+}
+.btn[disabled="disabled"],
+.btn.disabled,
+.btn:disabled {
+  cursor: default;
+  background: #fafafa !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid #eee !important;
+  font-weight: 400 !important;
+  -webkit-font-smoothing: initial !important;
+}
+.btn[disabled="disabled"] .spinner,
+.btn.disabled .spinner,
+.btn:disabled .spinner {
+  color: #aaa !important;
+}
+.btn[disabled="disabled"]:hover,
+.btn.disabled:hover,
+.btn:disabled:hover {
+  cursor: default;
+  background: #fafafa;
+}
+.btn .spinner {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  color: inherit;
+}
+.btn.warning {
+  color: #fff;
+  background: #cc2f26;
+  border-color: #cc2f26;
+}
+.btn.warning.pressed,
+.btn.warning:hover {
+  background: #c42d25;
+  border-color: #c42d25;
+}
+.btn.success {
+  background: #41bb56;
+  color: #fff;
+  border-color: #41bb56;
+}
+.btn.success.pressed,
+.btn.success:hover {
+  background: #3baa4e;
+  border-color: #3baa4e;
+}
+.btn.transparent {
+  border: none;
+  background: none;
+  font-weight: 400;
+}
+.btn.transparent:hover {
+  background: rgba(0, 0, 0, 0.075);
+  color: #424242;
+}
+.btn.primary {
+  background: #2864dc;
+  color: #fff;
+  border: 1px solid #2864dc;
+  transition: background .1s ease;
+}
+.btn.primary:hover {
+  background: #2357bf;
+}
+.lime {
+  background: #dbe294;
+  color: #676b46;
+  border: 1px solid #dbe294;
+}
+.lime:hover {
+  background: #cad189;
+  border: 1px solid #cad189;
+}
+.btn-group {
+  display: inline-flex;
+}
+.btn-group .btn {
+  margin: 0 !important;
+  border-radius: 0;
+  border-right-width: 0;
+}
+.btn-group > :first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-right: 0;
+}
+.btn-group > :last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-right-width: 1px;
+  margin-left: 0;
+}
+.dropdown-btn-container {
+  display: inline-block;
+  position: relative;
+}
+.dropdown-btn-container.open .dropdown-btn-list {
+  display: block;
+}
+.dropdown-btn-container.open .toggleable.btn {
+  background: #dadada;
+  box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.07);
+}
+.dropdown-btn-list {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 24px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  width: 149px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  padding: 2px 0;
+}
+.dropdown-btn-list * {
+  cursor: pointer;
+}
+.dropdown-btn-list hr {
+  margin: 2px 0;
+}
+.dropdown-btn-list .dropdown-item,
+.dropdown-btn-list > div,
+.dropdown-btn-list > a {
+  width: 100%;
+  display: block;
+  padding: 7px 7px;
+  color: #333;
+}
+.dropdown-btn-list .dropdown-item i,
+.dropdown-btn-list > div i,
+.dropdown-btn-list > a i {
+  width: 15px;
+  display: inline-block;
+  text-align: center;
+}
+.dropdown-btn-list .dropdown-item.disabled,
+.dropdown-btn-list > div.disabled,
+.dropdown-btn-list > a.disabled {
+  color: #b8b8b8;
+}
+.dropdown-btn-list .dropdown-item:hover,
+.dropdown-btn-list > div:hover,
+.dropdown-btn-list > a:hover {
+  text-decoration: none;
+}
+.dropdown-btn-list .dropdown-item:hover:not(.disabled),
+.dropdown-btn-list > div:hover:not(.disabled),
+.dropdown-btn-list > a:hover:not(.disabled) {
+  background: #2864dc;
+  color: #fff;
+}
+.dropdown-btn-list > div,
+.dropdown-btn-list .dropdown-item {
+  padding: 8px 15px;
+  border-bottom: 1px solid #d9d9d9;
+}
+.dropdown-btn-list > div:last-child,
+.dropdown-btn-list .dropdown-item:last-child {
+  border: 0;
+}
+.dropdown-btn-list > div .title,
+.dropdown-btn-list .dropdown-item .title {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.dropdown-btn-list > div .title i,
+.dropdown-btn-list .dropdown-item .title i {
+  margin-right: 2px;
+}
+.dropdown-btn-list > div:hover .desc,
+.dropdown-btn-list .dropdown-item:hover .desc {
+  color: #fff;
+}
+.btn-bar .btn {
+  border-radius: 0 !important;
+}
+.btn-bar .btn:first-child {
+  border-radius: 2px 0 0 2px !important;
+}
+.btn-bar .btn:last-child {
+  border-radius: 0 2px 2px 0 !important;
+}
+.btn-bar .btn:not(:first-child) {
+  border-left: 0;
+}
+a.btn span {
+  vertical-align: baseline;
+}
+.btn.nofocus:focus,
+button.nofocus:focus {
+  outline: 0;
+  box-shadow: none;
+}
+.vertical-scroll {
+  overflow-y: scroll;
+}
+.shadow {
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.25);
+}
+.dropdown-shadow {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+.dropdown-shadow-subtle {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+}
+.overflow-ellipsis,
+#messageDiv {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+html {
+  background: #fff;
+}
+#messageDiv {
+  margin: 20px 5px 15px;
+  font-size: 16px;
+}
+#promptInput {
+  width: 460px;
+  padding: 5px 6px;
+  font-size: 16px;
+  margin: 5px;
+}
+.actions {
+  margin: 10px 4px;
+  text-align: right;
+}
+.btn {
+  width: 75px;
+}

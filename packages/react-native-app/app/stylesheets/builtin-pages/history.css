@@ -1,0 +1,23 @@
+.link {
+  color: #295fcb;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.builtin-wrapper.history-wrapper .ll-row:not(:last-of-type) {
+  border-bottom: 1px solid #e6e6e6;
+  border-top: 0;
+}
+.builtin-wrapper.history-wrapper .search-container {
+  max-width: calc(100% - 240px);
+}
+@media (min-width: 965px) {
+  .builtin-wrapper.history-wrapper .search-container {
+    max-width: 700px;
+  }
+}

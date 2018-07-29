@@ -5,7 +5,23 @@
   "devDependencies": {
     "jest-expo": "~27.0.0",
     "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.3.1"
+    "react-test-renderer": "16.3.1",
+    "eslint": "^4.5.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "fs-jetpack": "^1.2.0",
+    "gulp": "^4.0.0",
+    "gulp-batch": "^1.0.5",
+    "gulp-less": "^4.0.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.3.5",
+    "into-stream": "^2.0.1",
+    "q": "^1.4.1",
+    "rollup": "^0.41.0",
+    "yargs": "^4.2.0"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
